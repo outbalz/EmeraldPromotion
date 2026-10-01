@@ -32,6 +32,11 @@ public class CEnemyChaseTargetController : MonoBehaviour
         }
 
         Vector2 moveVector = _targetTr.position - transform.position;
+        if(moveVector.sqrMagnitude < 2)
+        {
+            moveVector = Vector2.zero;
+        }
+
         bool isRunning = (moveVector.sqrMagnitude < 5 * 5);
 
         _movementController.MoveChararcter(moveVector.normalized, isRunning);
