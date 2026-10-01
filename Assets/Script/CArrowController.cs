@@ -24,4 +24,5 @@ public class CArrowController : MonoBehaviour
     {
         transform.position +=  transform.rotation * Vector3.right * 1f;
     }
+
 }
