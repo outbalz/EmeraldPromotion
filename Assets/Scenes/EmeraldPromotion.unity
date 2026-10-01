@@ -486,6 +486,8 @@ GameObject:
   - component: {fileID: 1672382107}
   - component: {fileID: 1672382111}
   - component: {fileID: 1672382110}
+  - component: {fileID: 1672382113}
+  - component: {fileID: 1672382112}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -653,6 +655,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &1672382112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672382106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562ed4ac85eaf71408b0be6833c18d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rb: {fileID: 1672382111}
+  _animator: {fileID: 1672382108}
+  _movementSpeed: 2
+  _runSpeed: 4
+--- !u!114 &1672382113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672382106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013c538f80719b94b9eeeef7ee0ac7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementController: {fileID: 1672382112}
+  _targetTr: {fileID: 1381296076}
 --- !u!1 &1809008139
 GameObject:
   m_ObjectHideFlags: 0
