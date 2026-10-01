@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 화살에 오브젝트 풀링을 구현하지 않았지만, 이후 구현해서 수정한다면, 수정하기 쉽도록 팩토리 사용
 public class CArrowFactory : MonoBehaviour
 {
 
@@ -9,8 +10,6 @@ public class CArrowFactory : MonoBehaviour
     [SerializeField] private CArrowController _arrowPrefab;
     [SerializeField] private Transform _parent;
     #endregion
-
-    
 
     public CArrowController CreateArrow(Vector3 pos, Quaternion rot)
     {
