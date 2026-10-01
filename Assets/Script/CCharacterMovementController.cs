@@ -42,14 +42,8 @@ public class CCharacterMovementController : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
+    public void MoveChararcter(Vector2 moveVector, bool isRunning)
     {
-        MoveChararcter();
-    }
-
-    private void MoveChararcter()
-    {
-        Vector2 moveVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         if(moveVector.sqrMagnitude < 0.0001f)
         {
@@ -60,8 +54,6 @@ public class CCharacterMovementController : MonoBehaviour
         }
 
         Vector2.ClampMagnitude(moveVector, 1.0f);
-
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
 
         moveVector *= isRunning ? _runSpeed : _movementSpeed ;
 
