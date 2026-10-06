@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CArrowController : MonoBehaviour
 {
+    [SerializeField] private float _damage = 1f;
 
     private float _lifetime = 5;
 
@@ -23,6 +24,18 @@ public class CArrowController : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position +=  transform.rotation * Vector3.right * 1f;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            CHPController _ememyHP = collision.collider.GetComponent<CHPController>();
+
+            _ememyHP.TakeDamage(_damage);
+            Debug.Log("!!");
+            Destroy(gameObject);
+        }
     }
 
 }

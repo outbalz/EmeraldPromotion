@@ -39,7 +39,7 @@ public class CEnemyChaseTargetController : MonoBehaviour
 
         bool isRunning = (moveVector.sqrMagnitude < 5 * 5);
 
-        _movementController.MoveChararcter(moveVector.normalized, isRunning);
+        _movementController.MoveChararcter(Vector2.ClampMagnitude(moveVector, 1), isRunning);
     }
 
 }
