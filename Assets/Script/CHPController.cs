@@ -9,6 +9,7 @@ public class CHPController : MonoBehaviour
     [SerializeField] private float _hp;
     [SerializeField] private float _maxhp;
     [SerializeField] private Slider _hpBar;
+    [SerializeField] private CCharacterStateController _stateController;
     #endregion
 
     private void Awake()
@@ -22,6 +23,19 @@ public class CHPController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (_stateController != null)
+        {
+            if (_stateController.IsInvincible)
+            {
+                return;
+            }
+
+            else
+            {
+                _stateController.TakeDamege();
+            }
+        }
+
         _hp -= damage;
 
         if( _hp < 0)

@@ -6,16 +6,9 @@ public class CCharacterMovementController : MonoBehaviour
 {
     #region inspector
     [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private CCharacterStateController _state;
     [SerializeField] private float _movementSpeed = 1.0f;
     [SerializeField] private float _runSpeed = 2.0f;
-    #endregion
-
-    #region private var
-    private readonly int _hashVelocityX = Animator.StringToHash("fVelocityX");
-    private readonly int _hashVelocityY = Animator.StringToHash("fVelocityY");
-    private readonly int _hashOnMove = Animator.StringToHash("bOnMove");
-    private readonly int _hashIsRunning = Animator.StringToHash("bIsRunning");
     #endregion
 
     private void Awake()
@@ -30,11 +23,11 @@ public class CCharacterMovementController : MonoBehaviour
             }
         }
 
-        if (_animator == null)
+        if(_state == null)
         {
-            if(!TryGetComponent<Animator>(out _animator))
+            if(!TryGetComponent<CCharacterStateController>(out _state))
             {
-                Debug.LogWarning("Missing Animator");
+                Debug.LogWarning("Missing CCharacterStateController");
                 enabled = false;
                 return;
             }
@@ -47,8 +40,6 @@ public class CCharacterMovementController : MonoBehaviour
 
         if(moveVector.sqrMagnitude < 0.0001f)
         {
-            _animator.SetBool(_hashOnMove, false);
-            _animator.SetBool(_hashIsRunning, false);
             _rb.velocity = Vector2.zero;
             return;
         }
@@ -59,11 +50,7 @@ public class CCharacterMovementController : MonoBehaviour
 
         _rb.velocity = moveVector;
 
-        _animator.SetFloat(_hashVelocityX, moveVector.x);
-        _animator.SetFloat(_hashVelocityY, moveVector.y);
-        _animator.SetBool(_hashOnMove, true);
-        _animator.SetBool(_hashIsRunning, isRunning);
-        
+        _state.OnMove(moveVector, isRunning);
     }
 
 
