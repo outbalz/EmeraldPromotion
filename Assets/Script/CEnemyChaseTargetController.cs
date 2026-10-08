@@ -6,6 +6,7 @@ public class CEnemyChaseTargetController : MonoBehaviour
 {
     #region inspector
     [SerializeField] private CCharacterMovementController _movementController;
+    [SerializeField] private CCharacterStateController _state;
     [SerializeField] private Transform _targetTr;
     #endregion
 
@@ -21,6 +22,15 @@ public class CEnemyChaseTargetController : MonoBehaviour
             }
         }
 
+        if (_state == null)
+        {
+            if (!TryGetComponent<CCharacterStateController>(out _state))
+            {
+                Debug.LogWarning("Missing State Controller");
+                enabled = false;
+                return;
+            }
+        }
 
     }
 
@@ -32,7 +42,13 @@ public class CEnemyChaseTargetController : MonoBehaviour
             return;
         }
 
+        if(_state.State == CCharacterStateController.ECharacterState.TakeDamaged)
+        {
+            return;
+        }
+
         Vector2 moveVector = _targetTr.position - transform.position;
+
         if(moveVector.sqrMagnitude < 2)
         {
             moveVector = Vector2.zero;

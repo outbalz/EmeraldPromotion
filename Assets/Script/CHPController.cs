@@ -38,9 +38,9 @@ public class CHPController : MonoBehaviour
 
         _hp -= damage;
 
-        if( _hp < 0)
+        if( _hp <= 0)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
             return;
         }
 

@@ -10,6 +10,7 @@ public class CCharacterStateController : MonoBehaviour
         OnMove,
         Running,
         TakeDamaged,
+        Attack,
         Death
     }
 
@@ -30,6 +31,7 @@ public class CCharacterStateController : MonoBehaviour
     private bool _isInvincible = false;
     #endregion
 
+    #region property
     public bool IsInvincible
     {
         get
@@ -42,7 +44,22 @@ public class CCharacterStateController : MonoBehaviour
             return false;
         }
     }
+    public ECharacterState State => _state;
+    #endregion
 
+
+    private void Awake()
+    {
+        if (_animator == null)
+        {
+            if(!TryGetComponent<Animator>(out _animator))
+            {
+                Debug.LogWarning("Missing Animator");
+                enabled = false;
+                return;
+            }
+        }
+    }
 
     private void OnEnterState(ECharacterState state)
     {
@@ -60,6 +77,8 @@ public class CCharacterStateController : MonoBehaviour
             case ECharacterState.TakeDamaged:
                 _animator.SetTrigger(_hashTakeDamage);
                 _isInvincible = true;
+                break;
+            case ECharacterState.Attack:
                 break;
             case ECharacterState.Death:
                 break;
@@ -84,6 +103,8 @@ public class CCharacterStateController : MonoBehaviour
                 break;
             case ECharacterState.TakeDamaged:
                 break;
+            case ECharacterState.Attack:
+                break;
             case ECharacterState.Death:
                 break;
             default:
@@ -96,6 +117,11 @@ public class CCharacterStateController : MonoBehaviour
     private void ChangeState(ECharacterState state)
     {
         if (_state == state)
+        {
+            return;
+        }
+
+        if(_stunOnHit && _isInvincible)
         {
             return;
         }
@@ -130,6 +156,11 @@ public class CCharacterStateController : MonoBehaviour
     private void InvincibleTimeEnd()
     {
         _isInvincible = false;
+        ChangeState(ECharacterState.Idle);
+    }
+
+    public void SetIdle()
+    {
         ChangeState(ECharacterState.Idle);
     }
 }

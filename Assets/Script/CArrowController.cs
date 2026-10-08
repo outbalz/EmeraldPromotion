@@ -33,7 +33,6 @@ public class CArrowController : MonoBehaviour
             CHPController _ememyHP = collision.collider.GetComponent<CHPController>();
 
             _ememyHP.TakeDamage(_damage);
-            Debug.Log("!!");
             Destroy(gameObject);
         }
     }

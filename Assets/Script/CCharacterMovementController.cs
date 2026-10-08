@@ -41,6 +41,7 @@ public class CCharacterMovementController : MonoBehaviour
         if(moveVector.sqrMagnitude < 0.0001f)
         {
             _rb.velocity = Vector2.zero;
+            _state.SetIdle();
             return;
         }
 
