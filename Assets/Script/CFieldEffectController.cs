@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CFieldEffectController : MonoBehaviour
@@ -11,7 +12,7 @@ public class CFieldEffectController : MonoBehaviour
 
 
     #region private var
-    private List<CHPController> _effectedCharacters = new List<CHPController>();
+    private Dictionary<CHPController, Coroutine> _effectMap = new Dictionary<CHPController, Coroutine>();
     #endregion
 
 
@@ -20,9 +21,15 @@ public class CFieldEffectController : MonoBehaviour
         
         CHPController chara = collision.GetComponent<CHPController>();
 
-        if (chara != null)
+        if (chara == null)
         {
-            _effectedCharacters.Add(chara);
+            return;
+        }
+
+        if (!_effectMap.ContainsKey(chara))
+        {
+            Coroutine healroutine = StartCoroutine(CoHealroutine(chara));
+            _effectMap.Add(chara, healroutine);
         }
     }
 
@@ -32,25 +39,31 @@ public class CFieldEffectController : MonoBehaviour
         
         CHPController chara = collision.GetComponent<CHPController>();
 
-        if (chara != null)
-        {
-            if (_effectedCharacters.Contains(chara))
-            {
-                _effectedCharacters.Remove(chara);
-            }
-        }
-    }
-
-    private void Update()
-    {
-        if( _effectedCharacters.Count <= 0)
+        if (chara == null)
         {
             return;
         }
 
-        for (int i = 0; i < _effectedCharacters.Count; i++)
+        if (_effectMap.ContainsKey(chara))
         {
-            _effectedCharacters[i].TakeDamage(-_healAmount * Time.deltaTime, true);
+            StopCoroutine(_effectMap[chara]);
+            _effectMap.Remove(chara);
         }
+    }
+
+
+    private IEnumerator CoHealroutine(CHPController chara)
+    {
+        while (chara.HP > 0) 
+        {
+            chara.TakeDamage(-_healAmount, true);
+            yield return new WaitForSeconds(1);
+        }
+
+        if (_effectMap.ContainsKey(chara))
+        {
+            _effectMap.Remove(chara);
+        }
+        yield break;
     }
 }
