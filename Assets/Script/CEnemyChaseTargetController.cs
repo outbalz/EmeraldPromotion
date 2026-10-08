@@ -8,6 +8,7 @@ public class CEnemyChaseTargetController : MonoBehaviour
     [SerializeField] private CCharacterMovementController _movementController;
     [SerializeField] private CCharacterStateController _state;
     [SerializeField] private Transform _targetTr;
+    [SerializeField] private float _attackDamage;
     #endregion
 
     private void Awake()
@@ -39,6 +40,7 @@ public class CEnemyChaseTargetController : MonoBehaviour
     {
         if (_targetTr == null)
         {
+            enabled = false;
             return;
         }
 
@@ -52,11 +54,29 @@ public class CEnemyChaseTargetController : MonoBehaviour
         if(moveVector.sqrMagnitude < 2)
         {
             moveVector = Vector2.zero;
+            _state.ChangeState(CCharacterStateController.ECharacterState.Attack);
         }
 
         bool isRunning = (moveVector.sqrMagnitude < 5 * 5);
 
         _movementController.MoveChararcter(Vector2.ClampMagnitude(moveVector, 1), isRunning);
+    }
+
+    private void AttackTarget()
+    {
+        float sqrDistance = (_targetTr.position - transform.position).sqrMagnitude;
+
+        if(sqrDistance > 5)
+        {
+            return;
+        }
+
+        CHPController enemyHP;
+
+        if(_targetTr.TryGetComponent<CHPController>(out enemyHP))
+        {
+            enemyHP.TakeDamage(_attackDamage);
+        }
     }
 
 }

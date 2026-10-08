@@ -26,6 +26,7 @@ public class CCharacterStateController : MonoBehaviour
     private readonly int _hashOnMove = Animator.StringToHash("bOnMove");
     private readonly int _hashIsRunning = Animator.StringToHash("bIsRunning");
     private readonly int _hashTakeDamage = Animator.StringToHash("tTakeDamage");
+    private readonly int _hashAttack =  Animator.StringToHash("tAttack");
 
     private ECharacterState _state;
     private bool _isInvincible = false;
@@ -79,6 +80,7 @@ public class CCharacterStateController : MonoBehaviour
                 _isInvincible = true;
                 break;
             case ECharacterState.Attack:
+                _animator.SetTrigger(_hashAttack);
                 break;
             case ECharacterState.Death:
                 break;
@@ -114,7 +116,7 @@ public class CCharacterStateController : MonoBehaviour
     }
 
 
-    private void ChangeState(ECharacterState state)
+    public void ChangeState(ECharacterState state)
     {
         if (_state == state)
         {
@@ -159,8 +161,4 @@ public class CCharacterStateController : MonoBehaviour
         ChangeState(ECharacterState.Idle);
     }
 
-    public void SetIdle()
-    {
-        ChangeState(ECharacterState.Idle);
-    }
 }
