@@ -21,18 +21,21 @@ public class CHPController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool ignoreInvincible = false)
     {
         if (_stateController != null)
         {
-            if (_stateController.IsInvincible)
+            if (_stateController.IsInvincible && !ignoreInvincible)
             {
                 return;
             }
 
             else
             {
-                _stateController.TakeDamege();
+                if (damage > 0)
+                {
+                    _stateController.TakeDamege();
+                }
             }
         }
 
@@ -49,6 +52,5 @@ public class CHPController : MonoBehaviour
             _hpBar.SetValueWithoutNotify(_hp);
         }
     }
-
 
 }
