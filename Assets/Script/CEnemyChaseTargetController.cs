@@ -11,6 +11,11 @@ public class CEnemyChaseTargetController : MonoBehaviour
     [SerializeField] private float _attackDamage;
     #endregion
 
+    #region private var
+    private bool _playerDeathBinded = false;
+    #endregion
+
+
     private void Awake()
     {
         if (_movementController == null)
@@ -35,6 +40,60 @@ public class CEnemyChaseTargetController : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        if(_playerDeathBinded == true || _targetTr == null)
+        {
+            return;
+        }
+
+        CCharacterStateController playerState = _targetTr.GetComponent<CCharacterStateController>();
+
+        if (playerState != null)
+        {
+            playerState.OnDeathEvent += OnPlayerDeath;
+            _playerDeathBinded = true;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if(_playerDeathBinded == true || _targetTr == null)
+        {
+            return;
+        }
+
+        CCharacterStateController playerState = _targetTr.GetComponent<CCharacterStateController>();
+
+        if (playerState != null)
+        {
+            playerState.OnDeathEvent += OnPlayerDeath;
+            _playerDeathBinded = true;
+        }        
+    }
+
+    private void OnDisable()
+    {
+        if(_playerDeathBinded == false || _targetTr == null)
+        {
+            return;
+        }
+
+        CCharacterStateController playerState = _targetTr.GetComponent<CCharacterStateController>();
+
+        if (playerState != null)
+        {
+            playerState.OnDeathEvent -= OnPlayerDeath;
+            _playerDeathBinded = false;
+        }         
+    }
+
+
+    private void OnPlayerDeath()
+    {
+        _movementController.MoveChararcter(Vector2.zero, false);
+        enabled = false;
+    }
 
     private void FixedUpdate()
     {

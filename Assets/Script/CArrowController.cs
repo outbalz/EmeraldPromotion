@@ -26,11 +26,17 @@ public class CArrowController : MonoBehaviour
         transform.position +=  transform.rotation * Vector3.right * 1f;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy"))
         {
-            CHPController _ememyHP = collision.collider.GetComponent<CHPController>();
+            CHPController _ememyHP = collision.GetComponent<CHPController>();
+
+            if (_ememyHP == null)
+            {
+                return;
+            }
 
             _ememyHP.TakeDamage(_damage);
             Destroy(gameObject);

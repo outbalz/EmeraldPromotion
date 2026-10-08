@@ -61,7 +61,8 @@ public class CHPController : MonoBehaviour
     private void OnDeath()
     {
         _hpBar.gameObject.SetActive(false);
-        //enabled = false;
+
+
     }
 
     public void TakeDamage(float damage, bool ignoreInvincible = false)
