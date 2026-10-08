@@ -12,6 +12,11 @@ public class CHPController : MonoBehaviour
     [SerializeField] private CCharacterStateController _stateController;
     #endregion
 
+    #region property
+    public float HP => _hp;
+    public float MaxHP => _maxhp;
+    #endregion
+
     private void Awake()
     {
         if(_hpBar != null)
@@ -45,6 +50,11 @@ public class CHPController : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+        }
+
+        if(_hp > _maxhp)
+        {
+            _hp = _maxhp;
         }
 
         if (_hpBar != null)

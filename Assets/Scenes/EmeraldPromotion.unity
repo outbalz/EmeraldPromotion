@@ -399,6 +399,7 @@ GameObject:
   - component: {fileID: 552649060}
   - component: {fileID: 552649059}
   - component: {fileID: 552649058}
+  - component: {fileID: 552649061}
   m_Layer: 0
   m_Name: DeHealingField
   m_TagString: Untagged
@@ -519,6 +520,19 @@ Transform:
   - {fileID: 1359862389}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &552649061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552649057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea72a5a8f73e175499c8f38dcef7624f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healAmount: -1
 --- !u!1 &629136463
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +1013,7 @@ GameObject:
   - component: {fileID: 1381296082}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1957,8 +1971,9 @@ GameObject:
   - component: {fileID: 1862152105}
   - component: {fileID: 1862152104}
   - component: {fileID: 1862152103}
+  - component: {fileID: 1862152106}
   m_Layer: 0
-  m_Name: Red Potion 3
+  m_Name: HPPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2076,6 +2091,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1862152106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862152102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3a42ca1abbac14e817faf9c78e0742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healAmount: 5
 --- !u!1 &1884254050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2155,6 +2183,7 @@ GameObject:
   - component: {fileID: 1886292026}
   - component: {fileID: 1886292025}
   - component: {fileID: 1886292023}
+  - component: {fileID: 1886292027}
   m_Layer: 0
   m_Name: HealingField
   m_TagString: Untagged
@@ -2276,6 +2305,19 @@ Transform:
   - {fileID: 2111155465}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1886292027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886292022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea72a5a8f73e175499c8f38dcef7624f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healAmount: 1
 --- !u!1 &2111155464
 GameObject:
   m_ObjectHideFlags: 0
