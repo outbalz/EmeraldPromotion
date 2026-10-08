@@ -64,6 +64,12 @@ public class CEnemyChaseTargetController : MonoBehaviour
 
     private void AttackTarget()
     {
+        if (_targetTr == null)
+        {
+            enabled = false;
+            return;
+        }
+
         float sqrDistance = (_targetTr.position - transform.position).sqrMagnitude;
 
         if(sqrDistance > 5)

@@ -6,6 +6,7 @@ public class CPlayerInputHandler : MonoBehaviour
 {
 	#region inspector
 	[SerializeField] private CCharacterMovementController _movementController;
+	[SerializeField] private CCharacterStateController _stateController;
     #endregion
 
     private void Awake()
@@ -20,6 +21,8 @@ public class CPlayerInputHandler : MonoBehaviour
             }
         }
     }
+
+
     private void FixedUpdate()
     {
         Vector2 moveVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));

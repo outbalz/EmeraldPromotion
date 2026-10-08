@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ public class CCharacterStateController : MonoBehaviour
     private readonly int _hashIsRunning = Animator.StringToHash("bIsRunning");
     private readonly int _hashTakeDamage = Animator.StringToHash("tTakeDamage");
     private readonly int _hashAttack =  Animator.StringToHash("tAttack");
+    private readonly int _hashDeath =  Animator.StringToHash("tDeath");
 
     private ECharacterState _state;
     private bool _isInvincible = false;
@@ -46,6 +48,7 @@ public class CCharacterStateController : MonoBehaviour
         }
     }
     public ECharacterState State => _state;
+    public event Action OnDeathEvent;
     #endregion
 
 
@@ -83,6 +86,8 @@ public class CCharacterStateController : MonoBehaviour
                 _animator.SetTrigger(_hashAttack);
                 break;
             case ECharacterState.Death:
+                _animator.SetTrigger(_hashDeath);
+                OnDeathEvent?.Invoke();
                 break;
             default:
                 break;
@@ -108,6 +113,7 @@ public class CCharacterStateController : MonoBehaviour
             case ECharacterState.Attack:
                 break;
             case ECharacterState.Death:
+                Destroy(gameObject);
                 break;
             default:
                 break;
@@ -118,12 +124,12 @@ public class CCharacterStateController : MonoBehaviour
 
     public void ChangeState(ECharacterState state)
     {
-        if (_state == state)
+        if (_state == state || _state == ECharacterState.Death)
         {
             return;
         }
 
-        if(_stunOnHit && _isInvincible)
+        if(_stunOnHit && _isInvincible && state != ECharacterState.Death)
         {
             return;
         }

@@ -12,6 +12,10 @@ public class CHPController : MonoBehaviour
     [SerializeField] private CCharacterStateController _stateController;
     #endregion
 
+    #region private var
+    private bool _deathBinded = false;
+    #endregion
+
     #region property
     public float HP => _hp;
     public float MaxHP => _maxhp;
@@ -26,8 +30,47 @@ public class CHPController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (_stateController != null && _deathBinded == false)
+        {
+            _stateController.OnDeathEvent += OnDeath;
+            _deathBinded = true;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (_stateController != null && _deathBinded == false)
+        {
+            _stateController.OnDeathEvent += OnDeath;
+            _deathBinded = true;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_stateController != null && _deathBinded == true)
+        {
+            _stateController.OnDeathEvent -= OnDeath;
+            _deathBinded = false;
+        }
+    }
+
+
+    private void OnDeath()
+    {
+        _hpBar.gameObject.SetActive(false);
+        //enabled = false;
+    }
+
     public void TakeDamage(float damage, bool ignoreInvincible = false)
     {
+        if(_stateController.State == CCharacterStateController.ECharacterState.Death)
+        {
+            return;
+        }
+
         if (_stateController != null)
         {
             if (_stateController.IsInvincible && !ignoreInvincible)
@@ -48,7 +91,7 @@ public class CHPController : MonoBehaviour
 
         if( _hp <= 0)
         {
-            Destroy(gameObject);
+            _stateController.ChangeState(CCharacterStateController.ECharacterState.Death);
             return;
         }
 
@@ -62,5 +105,6 @@ public class CHPController : MonoBehaviour
             _hpBar.SetValueWithoutNotify(_hp);
         }
     }
+
 
 }

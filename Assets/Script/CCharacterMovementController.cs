@@ -37,7 +37,7 @@ public class CCharacterMovementController : MonoBehaviour
 
     public void MoveChararcter(Vector2 moveVector, bool isRunning)
     {
-        if(_state.State == CCharacterStateController.ECharacterState.Attack)
+        if(_state.State == CCharacterStateController.ECharacterState.Attack || _state.State == CCharacterStateController.ECharacterState.Death)
         {
             _rb.velocity = Vector2.zero;
             return;

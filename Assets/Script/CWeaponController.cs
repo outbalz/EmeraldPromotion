@@ -9,6 +9,7 @@ public class CWeaponController : MonoBehaviour
     [SerializeField] private CArrowFactory _arrowFactory;
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _pivotTransform;
+    [SerializeField] private CCharacterStateController _stateController;
     #endregion
 
     #region privat var
@@ -16,6 +17,7 @@ public class CWeaponController : MonoBehaviour
     private readonly int _hashDraw = Animator.StringToHash("tDraw");
     private readonly int _hashRelese = Animator.StringToHash("tRelese");
     private bool _isBowDrawn = false;
+    private bool _deathBinded = false;
     #endregion
 
     private void Awake()
@@ -38,6 +40,38 @@ public class CWeaponController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (_stateController != null && _deathBinded == false)
+        {
+            _stateController.OnDeathEvent += OnDeath;
+            _deathBinded = true;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (_stateController != null && _deathBinded == false)
+        {
+            _stateController.OnDeathEvent += OnDeath;
+            _deathBinded = true;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_stateController != null && _deathBinded == true)
+        {
+            _stateController.OnDeathEvent -= OnDeath;
+            _deathBinded = false;
+        }    
+    }
+
+    private void OnDeath()
+    {
+        gameObject.SetActive(false);
+        enabled = false;
+    }
 
     void Update()
     {
